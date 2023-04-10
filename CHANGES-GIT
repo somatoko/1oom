@@ -1,0 +1,237 @@
+1oom-uistarmap-rework
+---------------------
+
+- Changed the cursor image when selecting a destination
+- You cannot select ships when choosing a destination but
+  you can force the selection cursor mode by holding Alt
+- It is now possible to select a reloc point within 
+  the normal range of the fleet
+- Alt+M, Alt+O, Alt+F, Ctrl+R, Alt+R merged to common UI
+- Added UI for choosing the design of the ship
+- The range check has been improved
+- Added the "Modern Controls" feature that allows you 
+  to select a planet on mouse hover
+- F2, F3, F8, F9 behavior is now the same as tag/search
+  if planet focus is visible
+- Starmap: Fleet: Holding Shift keeps selection if possible
+- Starmap: Fleet: Implemented kbd focus for +/-/=/a keys
+- Starmap: F4, F5 now iterates over transports or fleets enroute
+- Starmap: Planet: Pressing Alt + clicking on the left/right
+  slider arrow sets slider to min/max
+
+1oom-extra-merge
+----------------
+
+This branch follows 1oom-custom-game-menu and merges the best
+part of UI Extra, ruleset and 1oom-fork features to the core
+
+Ruleset:
+- permanently disabled weapon_list_max (now always 64)
+- permanently enabled bt_oracle_fix, stargate_redir_fix,
+  accident_chk_factories, trans_redir_fix, bt_wait_no_reload,
+  news_orion, doom_stack_fix
+- permanently enabled guardian fix and num_max_factories fix
+- New game: Added Hopeless difficulty
+
+UI Extra features merged:
+- UI Governor: Separated from the UI Extra
+- Starmap: Removed '?' cursor area
+- Starmap: Races hotkey changed 'r' -> 'e'
+- Starmap: Reloc hotkey changed 'l' -> 'r'
+- Starmap: Send transport: Holding Ctrl changes the number
+  of transports by 10%
+- Starmap: Send trans: Pressing A sets the slider to maximum
+- Starmap: Ctrl+R sets reloc point for all planets
+- Starmap: Alt+F shows incoming friendly fleet routes
+- Starmap: Alt+O shows populations for explored planets
+- Starmap: Keep focus after running through the Next turn phase
+- Starmap: Clicking a selected destination again works as Accept
+- Starmap: Eco slider shows fractional population growth
+- Starmap: Nebula planets have a purple frame around their picture
+- Starmap: = or # transfers reserve for one round of production
+- Races screen: Clicking the portraits brings Report page
+- Report screen: Shows name of AI leaders
+- Fleet screen: Clicking on Station or ship names sorts the list
+- Fleet screen: Specs hotkey changed 'v' -> 's'
+- Fleet screen: Scrap hotkey changed 's' -> 'r'
+- Planets screen: Nebula planets show NEB in their shields field
+- Planets screen: Clicking on #, Name, etc sorts the list
+- Planets screen: Added max population column
+- Planets screen: Clicking on the production field opens the reserve
+  transfer dialog or cancels the transfer.
+- Planets screen: Clicking on the dock field changes design selection
+- Planets screen: Ctrl+LMB on ship design name to build it everywhere
+- Planets screen: Alt+LMB replaces the ship design with the ship design 
+  of the current planet everywhere
+- Starmap: Added 'production' button for reserve transfer
+- Starmap: Added 'bases' button for basescrap UI
+- Starmap: Fleet: Holding Ctrl changes the number of ships by 1
+- Starmap: Allowed centering on any planet
+
+1oom-custom-game-menu
+---------------------
+
+This branch follows 1oom-main-menu-rework and implements
+the "custom game" menu based on uiextra->NewGame
+
+- Added option to generate galaxy seed
+- Added new optional game rules:
+	- No elections
+	- No random events
+	- Faster/Slower research rate
+	- Precap tohit (from fixbugs ruleset)
+		MOO1 adds To Hit bonuses after capping defense. This
+		results in high defense being less effective against
+		high tech missiles.
+	- No tohit accumulation (from fixbugs ruleset)
+		MOO1 accumulates weapon To Hit bonuses while firing
+		the four weapons slots. This results in Hyper-X or 
+		better missiles or Megabolt Cannon in slots 1..3
+		affecting the accuracy of a beam weapon in slot 4.
+
+- Precap tohit and No tohit accumulation is now enabled by
+  default in new games
+
+1oom-main-menu-rework
+---------------------
+
+This branch follows 1oom-fix-all and improves the main menu
+
+- Implemented menu with multiple pages and different layouts
+  for each page
+- Most of the settings are now available in the main menu
+- Menu items can be adjusted using the +/- keys, mouse wheel
+  and left/right mouse buttons
+- Removed Alt+X hotkey for UI Extra
+- The space combat auto resolve UI is separated from UI Extra
+  and can be enabled from the main menu or via cmd/cfg
+
+1oom-fix-all
+------------
+
+This branch follows 1oom-fix-conservative and may fix
+MOO1 bugs. This branch never changes MOO1 rules
+
+Core:
+- Fix Ctrl, Alt, Shift behavior
+- Pressing hot key or changing focus does not move the mouse
+- Only the clicked object is triggered on mouse button release
+
+UI Starmap:
+- Build Finished: Locked planet focus to avoid 'BUG' message
+- Build Finished: Fixed RMB area
+- UI Orbit Own: Allow to select the current planet
+- UI Send Transport/Reloc: Fixed the possibility of implicitly
+  changing the destination without clicking the Accept button
+- UI Send Transport: Fixed hotkeys and behavior
+- F6/F7/F8/F9: Fixed behavior if the target is not found
+- Max population: Always draws + if you can terraform
+- Top-right star view button: Now enabled if explored
+
+UI Planets:
+- Fix ship name color
+- Do not leave the planets UI when selecting a planet
+
+Tutor:
+- Better galaxy seed
+
+1oom-fix-conservative
+---------------------
+
+This branch may only fix 1oom bugs or change ui_extra features
+and never touches original MOO1 gameplay
+
+Core: 
+- Implemented the ability to disable keyboard auto-repeat
+  CFG: ui.kbd_repeat, CMD: -nokbdrepeat
+- Added ./data to lbx search path list
+- Implemented initial autosave in a new game
+- Implemented mouse cursor scaling
+
+UI Starmap:
+- Added map scrolling by mouse
+  CFG: ui.sm_mouse_scroll, CMD: -uismmousescroll
+- UI Orbit Own: Fixed button overlap
+- UI Reloc: Fixed ETA for hostile planet with stargate
+  
+UI Space Combat:
+- Added option to disable bomb animation
+  CFG: game.bombanimation, CMD: -nobombanimation
+  
+UI Specs:
+- Added hotkeys for scrap buttons (1-6)
+
+UI Extra:
+- UI Starmap:
+	- Removed F8/F9 ui_extra section
+	- Removed '?' cursor area
+	- Improved #,= behavior and added 'production' button
+	- Added 'bases' button
+	- Added I hotkey for message filter options
+	- Added Ctrl+R hotkey for 'relocate all' feature
+	- Removed extra menu
+	- Alt+O shows populations for explored planets
+	- Alt+F shows incoming friendly fleet routes
+	- Races hotkey changed 'r' -> 'e'
+	- Reloc hotkey changed 'l' -> 'r'
+	- Increased starmap scroll range
+- UI Send Transport:
+	- Pressing A sets the slider to maximum
+	- Holding Ctrl changes the number of transports by 10%
+- UI Orbit Own:
+	- Removed ui_extra feature: "Sending fewer than all ships
+	  does not deselect the orbit fleet"
+	- Holding Ctrl changes the number of ships by 1
+- UI Planets:
+	- Fixed sort order
+	- Fixed 'neb' text color
+	- Added max population column
+	- Added Ctrl+LMB hotkey for 'build everywhere' feature
+	- Alt+LMB replaces the ship design with the ship design 
+	  of the current planet everywhere
+- UI Governor:
+	- Moved governor UI button to 'Pop' text (V key)
+	- Removed all governor UI controls if governor is disabled
+- UI Design:
+	- Holding Ctrl changes the number of weapons by 10
+- UI Battle:
+	- Do Auto on Esc/RMB
+- UI Fleet:
+	- Specs hotkey changed 'v' -> 's'
+	- Scrap hotkey changed 's' -> 'r'
+
+Autoreconf:
+- Disables hwx11 if win32 detected
+
+Core
+----
+
+This branch forked from https://gitlab.com/Tapani_/1oom
+
+This branch can only fix bugs introduced in 1oom
+
+- Fixed infinite loop in lbxfont_calc_str_width
+  The game is now playable on ARM devices
+- Fixed population growth negative overflow
+- Fixed bottom menu highlighting on galaxy map screen
+- Fixed "Combat screen hit / death explosion effects #1"
+- Fixed handling of Shift/Ctrl/Alt modifiers in allegro4
+- game_cfg_check_new_game_opts: Fixed difficulty check
+
+For ui_scale > 1:
+
+- Fixed text_input dimensions
+- Fixed STARMAP_LIMITS
+- ui_game_start: Fixed starmap position
+- Fixed ui_cursor_area dimensions
+
+For 1oom features:
+
+- uistarmap: Fixed search UI
+- uistarmap:
+	Fixed tag behavior:
+	- Tap once to select the marked planet
+	- Tap twice to focus on the planet
+	- Fixed ability to set reloc point to any planet
+- uistarmap: Fixed UHJK scroll speed
+- uimainmenu: Fixed Load Game button condition

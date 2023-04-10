@@ -1,0 +1,366 @@
+This document describes things common for all the programs.
+
+This file is based on the OpenXcom 1.0 README, except s/folder/directory/g like
+a civilized person.
+
+
+1. LBX files
+=============
+
+1oom requires a copy of the Master of Orion (v1.3) LBX files.
+See doc/lbxmd5.txt for the expected MD5 sums.
+
+The LBX file can be in a different directory as the executable.
+You can also specify your own path by passing the command-line
+argument "-data <path>" when running 1oom. The given path is saved
+to the configuration file.
+
+The LBX files are first looked for in the directory specified with
+"-data <path>". If not found there, the following subsections apply.
+
+1.1. Windows, MSDOS
+--------------------
+
+1oom will check the directory of the executable and
+the "data" directory inside it.
+
+1.2 Unix (Linux)
+-----------------
+
+According to the XDG standard, 1oom will also check the
+following directories:
+
+- $XDG_DATA_HOME/1oom
+- $XDG_DATA_DIRS/1oom
+
+Or if those variables aren't available:
+
+- ~/.local/share/1oom
+- /usr/share/1oom
+- .
+
+Choose whichever you prefer.
+
+
+2. Configuration
+=================
+
+1oom is configured via command-line arguments or editing the
+configuration file. Each program has a separate configuration file (if any).
+
+2.1. User Directory
+--------------------
+
+1oom creates a User directory with all the user savegames and
+options in one of the following paths:
+
+- <game directory> (win32, msdos)
+- $XDG_CONFIG_HOME/1oom (Unix)
+- ~/.config/1oom (Unix)
+
+You can also specify your own path by passing the command-line
+argument "-user <path>" when running 1oom. Note that unlike "-data"
+the setting is not saved in the configuration file.
+
+2.2. What is not saved
+-----------------------
+
+Most options set via command-line arguments are saved to the configuration
+file (if any). The notable exceptions are:
+
+    -c          Config filename in the config file? Too meta
+    -cro        Can not write "do not write config" to config
+    -user       Config file is in user directory
+    -(no)log    Log is opened before reading config
+    -file
+
+
+3. Command-line arguments
+==========================
+
+The following are for the game UIs and lbxview. See doc/usage_*.txt for
+the other tools.
+
+For all:
+    -?                   Show command line options
+    -c FILE.TXT          Set config filename
+    -cro                 Do not write a config file
+    -user PATH           Set user directory
+    -data PATH           Set data directory
+    -log FILE.TXT        Set log filename
+    -nolog               Do not create a log file
+    -file FILE.PBX       Add PBX file
+    -ruleset RULESET     Selects a ruleset (1.3 or fixbugs)
+
+For UIs with audio support:
+    -audio               Enable audio
+    -noaudio             Disable audio
+    -music               Enable music
+    -nomusic             Disable music
+    -sfx                 Enable SFX
+    -nosfx               Disable SFX
+    -sfxinitpar          Init SFX in parallel (if possible)
+    -nosfxinitpar        Do not init SFX in parallel
+    -musicvol VOLUME     Set music volume (0..128)
+    -sfxvol VOLUME       Set SFX volume (0..128)
+    -audiohz HZ          Set audio sample rate (Hz)
+    -audioms MS          Set max audio slice size (ms)
+
+For UIs with audio support if libsamplerate is available:
+    -libsr               Use libsamplerate
+    -nolibsr             Do not use libsamplerate
+    -libsrscale PERCENT  libsamplerate scaling %
+    -libsrmode MODE      libsamplerate mode (0 = best, 4 = worst)
+
+For graphical UIs:
+    -fs                  Enable fullscreen
+    -window              Use windowed mode
+    -winw WIDTH          Set window width
+    -winh HEIGHT         Set window height
+                           if w & h are 0 then use game resolution
+    -fsw WIDTH           Set fullscreen width
+    -fsh HEIGHT          Set fullscreen height
+                           if w & h are 0 then use desktop resolution
+
+For some graphical UIs:
+    -aspect ASPECT       Set aspect ratio (*1000000, 0 = off)
+                           default = 833333, or (1000000 * 5)/6
+
+For SDL HWs:
+    -mousespd SPEED      Set mouse speed (default = 100)
+    -sdlmixersf FILE.SF2 Set SDL_mixer soundfont
+    -relmouse            Use relative mouse mode (default)
+    -norelmouse          Do not use relative mouse mode
+                         Allows playing in windowed mode without mouse capture.
+                         Disables forced mouse moves (keypad, some dialogs) and
+                         in-game mouse settings.
+
+For SDL1 HW:
+    -gl                  Enable OpenGL
+    -nogl                Disable OpenGL
+    -bpp BPP             Set bits/pixel (0 = autodetect)
+    -filt FILTER         Set OpenGL filter (0 = nearest, 1 = linear)
+
+For SDL2 HW:
+    -forcesw             Force software rendering
+    -noforcesw           Do not force software rendering
+    -intscaling          Force integer scaling
+    -nointscaling        Do not force integer scaling
+
+For all game UIs:
+    -dumpstr             Dump strings in PBXIN format
+    -dumpnum             Dump numbers in PBXIN format
+    -new GAMESEED        Start new game using given game seed
+                         GAMESEED is OPT[:RACES[:BANNERS[:GSEED[:HUMANS]]]]
+                         OPT is PLAYERS*100+GALAXYSIZE*10+DIFFICULTY
+                           2..6, 0..3 = small..huge, 0..4 = simple..impossible
+                           default same as last new game
+                         RACES is PLAYERnRACE*(0x10^n), n=0..5
+                           0 = random, 1..0xA = human..darlok
+                           default 0 (all random)
+                         BANNERS is PLAYERnBANNER*(10^n), n=0..5
+                           0 = random, 1..6 = blue..yellow
+                           default 0 (all random)
+                         GSEED is a 32 bit galaxy seed or 0 for random
+                           default 0
+                         HUMANS is PLAYERnISHUMAN*(10^n), n=0..5
+                           default 1 (player 1 is human, others AI)
+    -ngn PLAYER NAME     Set new game emperor name for player 1..6
+    -ngh PLAYER NAME     Set new game home world name for player 1..6
+    -nga AITYPE          Set new game AI type (0..1)
+    -load SAVE           Load game (1..8 or filename)
+                         1..6 are regular save slots
+                         7 is continue game
+                         8 is undo
+                         2300 and over are yearly saves
+    -continue            Continue game
+    -undo                Enable undo saves
+    -noundo              Disable undo saves
+    -yearsave            Enable yearly saves
+    -noyearsave          Disable yearly saves
+    -skipintro           Skip intro
+    -noskipintro         Do not skip intro
+    -nextturn            Go directly to next turn (for reproducing bugs)
+    -savequit            Save and quit (for debugging)
+    YOMAMA               Skip intro this time
+    s                    Continue game
+
+For classic game UI:
+    -uiscale SCALE       UI scaling factor
+    -uiextra             Enable UI extras
+    -nouiextra           Disable UI extras
+    -mwislider           Invert mouse wheel for sliders
+    -nomwislider         Do not invert mouse wheel for sliders
+    -mwicounter          Invert mouse wheel for counters
+    -nomwicounter        Do not invert mouse wheel for counters
+    -uismscroll SPEED    Starmap scroll speed (1..10, 0 = instant)
+
+3.1. -new
+----------
+
+Whenever a new game is started, the log displays a line such as:
+    Game: new game -new 621:0x5:4:0x3f5e5b32:1 -nga 0
+
+The alphanumeric jumble is a game seed. It can be given to -new to start
+a new game with the same galaxy and opponents.
+
+The game seed format is OPT:RACES:BANNERS:GSEED:HUMANS where
+    OPT is PLAYERS*100+GALAXYSIZE*10+DIFFICULTY
+      PLAYERS is 2..6
+      GALAXYSIZE is 0..3 = small..huge
+      DIFFICULTY is 0..4 = simple..impossible
+      default same as last new game
+    RACES is PLAYERnRACE*(0x10^n), n=0..5
+      0 = random
+      1 = human
+      2 = mrrshan
+      3 = silicoid
+      4 = sakkra
+      5 = psilon
+      6 = alkari
+      7 = klackon
+      8 = bulrathi
+      9 = meklar
+      a = darlok
+      default 0 (all random)
+    BANNERS is PLAYERnBANNER*(10^n), n=0..5
+      0 = random
+      1 = blue
+      2 = green
+      3 = purple
+      4 = red
+      5 = white
+      6 = yellow
+      default 0 (all random)
+    GSEED is a 32 bit galaxy seed or 0 for random
+      default 0
+    HUMANS is PLAYERnISHUMAN*(10^n), n=0..5
+      default 1 (player 1 is human, others AI)
+
+Omitting a value sets it to the default one.
+Some examples:
+
+    -new 634
+        * 6 player / huge / impossible game as a random race
+
+    -new :0x7
+        * player / size / difficulty same as last new game
+        * as klackon
+
+    -new :
+        * player / size / difficulty same as last new game
+        * as random race
+
+    -new 634:0x162
+        * 6 player / huge / impossible game as a random race
+        * (2) as mrrshan, against (6) alkari and (1) human, others random
+
+    -new 621:0x5:4:0x3f5e5b32:1
+        * 6 player game in (2) large galaxy with (1) easy difficulty
+        * player 1 race is (5) psilon, others random
+        * player 1 banner is (4) red, others random
+        * galaxy and random races/banners based on seed 0x3f5e5b32
+        * player 1 is human, others AI
+
+    -new 634:0x15533a
+        * 6 player / huge / impossible game
+        * as (a) darlok, against (1) human, (5) psilon, psilon,
+          (3) silicoid and silicoid
+
+    -new 304:0x48:25::11
+        * 3 player / small / impossible game
+        * player 1 is (5) white (8) bulrathi,
+          player 2 is (2) green (8) sakkra,
+          player 3 is random
+        * players 1 and 2 are human
+
+3.2. -nga
+----------
+
+The -nga command line parameters selects the AI type to use when starting
+a new game via -new. The values 0 and 1 correspond to Classic and Classic+,
+respectively.
+
+3.3. -file
+-----------
+
+Unlike Doom, the "-file" part needs to added for each PBX file.
+Like Doom, the given PBX filenames are not stored anywhere and must be given
+with -file whenever the PBX files are to be used.
+
+3.4. -ruleset
+--------------
+
+The ruleset option currently allows the values "1.3" (the default) or "fixbugs".
+The 1.3 mode closely follows the latest official release of the game, with some
+of the worst bugs fixed, such as the dreaded negative fleet bug.
+
+The fixbugs mode fixes further bugs and odd behaviors. Running the fixbugs
+ruleset is equivalent to loading a PBX file compiled from pbxin_fixbugs.txt.
+However, unlike PBX files, the ruleset choice is stored.
+
+PBX files override the chosen ruleset.
+
+
+4. Optional features
+================
+
+4.1. Planetary governor
+------------------------
+
+The planetary governor is provided as an option for reducing micromanagement.
+It is enabled/disabled for each planet individually. The planet list
+highlights governed planets.
+
+The classic UI has a new governor screen which is accessed by clicking on
+the Pop text or pressing V key. The governor screen allows:
+- Setting a target amount of missile bases.
+- Choosing where to spend remaining points: research, ships or reserve.
+- Allowing the governors to build stargates.
+- Setting the universal ecology mode:
+    - grow population before spending of defense
+    - grow population before last step
+    - never use resources to grow population
+    - do not decrease ecology spending
+    - do not touch ecology spending
+- Readjusting all governed planets.
+- Applying the spend remaining choice to all planets.
+
+The governor works as follows:
+- First, remember the old ecology slider position.
+- Then if mode is not "don't touch", set ecology to minimum that avoids waste.
+- Then if mode is "don't decrease" and old value was larger, restore it.
+- Then move industry slider until maximum or reserve achieved.
+- Then if mode is not "do not touch", set ecology to terraform.
+- Then if mode is "grow before defense", set ecology to grow population.
+- Then set defense to upgrade bases or build shield.
+- Then increase defense to build up to target amount of missile bases.
+- Then if technology is present and governor is allowed to build stargates,
+  set shipbuilding to minimum required to build one.
+- Then if mode is "grow before last", set ecology to grow population.
+- If all of the above are finished, do research, ship building or reserve.
+
+The governor adjusts the sliders only at the following times:
+- When enabling the governor by clicking the planet name.
+- When readjusting all planets via the governor screen.
+- After a turn, just before any "Planetary spending ratios may ..." messages.
+
+These rules have some implications:
+- The governor can be overridden by adjusting the sliders manually; the
+  governor takes over again at the next turn.
+- Adjusting governor settings, tax, spying, security or sending reserves is not
+  reflected on the sliders on the same turn. Either disable/enable the governor
+  for each affected planet or use the governor screen to readjust all the
+  governed planets for the next turn.
+- The "don't" modes still get the same automatic ecology adjustments as the
+  non-governed planets.
+- The governor copes poorly with random events, especially plague.
+
+4.2. Space combat autoresolve
+------------------------------
+
+The space combat autoresolve is provided as an option for skipping battles.
+Pressing the Auto button results in the battle beings fought as if the player(s)
+pressed Auto right after starting combat.
+The Retreat button works as if the (human) player(s) pressed Retreat at the
+earliest and every opportunity.

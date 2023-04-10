@@ -1,0 +1,137 @@
+1oom-fork-v1.7.6a
+-----------------
+
+- SDL2: Window is resizeable again
+
+1oom-fork-v1.7.6
+----------------
+
+- Restored original behavior of spies when NoEvents rule is enabled
+  (this may corrupt some saved games related to NoEvents mode)
+- Removed undefined auto-resolve hotkey behavior when combat 
+  auto-resolve is disabled
+- CFG: Added texture filtering option
+- SDL2: Fixed some screen resolution issues (might need to wipe
+  configuration file)
+- Fixed several issues with the intro movie
+
+1oom-fork-v1.7.5
+----------------
+
+Keyboard:
+- Changed volume hotkeys '+','-' to '[',']' to avoid conflicts
+- Improved hotkeys for Tech screen:
+	- 1-6 selects tech tab
+	- +,- adjusts related slider
+	- L locks related slider
+	- Holding Ctrl changes slider by 10
+	- Holding Alt changes slider to maximum
+- Fixed various bugs and odd behaviors related to numpad 1-9 keys
+	- The game is now expected to be playable without mouse
+
+Other:
+- Planets and fleets screens retain sort order
+- Fixed main menu background
+- Fixed stream/bomb/stasis animations for uiscale > 1
+- Renamed some main menu items
+- Added animation for current routes in Modern Controls mode
+- Fixed =,# reserve transfer behavior in case if empire reserve is 0
+
+1oom-fork-v1.7.4
+----------------
+
+Ui Main Menu -> Game -> Custom Game:
+- The 'Fix factory cost' option (now enabled by default in new games):
+  Continue building cheap factories after researching 
+  the 'Improved Robotic Controls' tech. This also changes
+  the refit cost to match the value described in OSG.
+- The 'Waste calc fix' option (from fixbugs ruleset)
+  (now enabled by default in new games): Fix waste calculation.
+  MOO1 adds waste twice: first using a perfectly sensible formula
+  and then a baffling one. The waste elimination cost is calculated
+  in between. The second amount added is often negative due to the
+  waste amount not being limited. This is why Silicoid planets
+  end up with 0 waste. Other races only see the effect when setting
+  the Eco slider below Clean.
+  
+AI:
+- Fix AI transport range
+
+UI Starmap:
+- Fix slider behavior
+
+1oom-fork-v1.7.3
+----------------
+
+Ui Main Menu -> Game -> Custom Game:
+- The 'Fix population growth' option
+  (now enabled by default in new games):
+  Do not add Population Tenths twice. MOO1 adds
+  Population Tenths twice when calculating population
+  growth. This results in nonlinear changes of growth value.
+  
+Ui Main Menu -> Interface
+- Random News (on/off)
+		
+Ui Starmap:
+- Eco slider can show 'MAX'
+- Removed alt-strings (now available in search UI as slash-commands):
+	/alt-string
+	
+Galaxy generator:
+- Fixed some bugs in the new galaxy_gen logic
+	
+Fixed static build scripts for SDL1 and SDL2
+
+1oom-fork-v1.7.2
+----------------
+
+Ui Main Menu -> Game -> Custom Game:
+- Galaxy generator:
+	- The 'Fix homes too close' option checks the distance
+	  between all homeworlds instead of only 2 of them
+	  This option disables Moo v1.3 check for good planets nearby
+	- The "Fix satellites" option ensures that each homeworld
+	  has a suitable planet next to it instead of only 2 of them
+	- The "Good satellites" option ensures that each satellite
+	  will be at least not bad quality
+
+- Changed 'Players' option text
+- Changed 'Galaxy seed' option text
+
+Ui Starmap:
+- Fixed Alt+m grid limits
+
+Updated COMPILING MinGW instructions
+
+
+1oom-fork-v1.7.1
+----------------
+
+Ui Starmap:
+- The "Build finished" text position now matches v1.6.4
+- Alt+c now centers on the selected fleet
+- F4, F5 now works for enemy orbits
+
+Ui Main Menu:
+- Fixed the "Interface" hotkey
+- Pressing Shift + hotkey works as RMB
+
+
+1oom-fork-v1.7.0
+----------------
+
+The "Custom game" menu was partially merged with the Main Menu and
+contains some new options such as "Research rate" and "No Events"
+
+Ui Starmap:
+- F4 and F5 now works for transports and fleets enroute
+- Pressing Alt + clicking slider arrows sets planet slider to min/max
+
+Old saved game compatibility - Yes
+Old configuration compatibility - No
+Old source tree compatibility - No
+
+For a full list of features, see the CHANGES-GIT
+
+

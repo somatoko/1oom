@@ -1,0 +1,175 @@
+################
+# 1oom_classic #
+################
+
+1oom_classic_* replicate the 1993 UI.
+
+See doc/usage_common.txt for the data/user file locations and command-line
+arguments.
+
+The UI controls like the original. Consult the game manual and the readme.txt
+from v1.3. This document describes only the differences.
+
+New hoykeys:
+- Middle click or Ctrl-F10 to grab/ungrab input
+- Ctrl-Esc to quit (without saving)
+- Ctrl-[/] to adjust sfx volume
+- Ctrl-Shift-[/] to adjust music volume
+- Ctrl-F5 saves a screenshot
+- Alt-Enter to toggle full screen mode
+
+Unlike the original, 1oom does not autosave the "continue game" (save slot 7)
+when starting a new game or every N turns. It only saves it when quitting the
+game via Game -> Quit or when F10 is pressed while in the "control screen" /
+"galaxy movement screen".
+
+Most of the settings are now available in the main menu.
+- Menu items can be adjusted using the +/- keys, mouse wheel
+  and left/right mouse buttons
+- Pressing hotkey works as +, pressing Shift + hotkey works as '-'
+
+The config file item "ui.uiscale" (set via the -uiscale command-line option)
+is an integer scaling factor for the whole UI except:
+- galaxy movement screen map
+- sliders
+The default value is 1 for that classic 320x200 feeling. Larger values allow
+more of the galaxy to be viewed without scrolling. Mouse wheel can be used
+to adjust the scaling of the galaxy movement screen map.
+
+The config file item "ui.space_combat_autoresolve" (set via
+the -spacecombatautoresolve command-line option or uiextra options menu)
+enables the following features:
+- Summary of forces shown before ship combat
+- New Auto and Retreat buttons for space combat autoresolve
+
+The following new UI features are always enabled/available:
+- It is now possible to select a reloc point within 
+  the normal range of the fleet
+- Added UI for choosing the design of the ship
+- Added the "Modern Controls" feature that allows you 
+  to select a planet on mouse hover
+- Smoother galaxy movement screen scrolling
+- Galaxy movement screen scrolling speed is adjustable (-uismscroll)
+- Pressing hot key or changing focus does not change mouse position
+- When you release the mouse, only the clicked object is triggered
+- Random race / banner
+- New difficulty level - "Hopeless"
+- Lowercase allowed in save names
+- Load Game screen uses numbers as hotkeys for slots
+- Objects with hotkeys can be navigated to using cursor keys
+- Mouse wheel can be used to scroll lists and adjust many things
+- Mouse wheel on planet name in the galaxy movement screen changes planet
+- Space bar works as a generic dismiss message key (Continue, ...)
+- Fleet/Specs screen uses numbers as hotkeys for scrap buttons
+- When sending a fleet Tab cycles ships and <> adjusts selected ship
+- In Races screen the keys 1-5 correspond to clicking the portraits
+- Right-clicking on the ship image or Ships button cycles the other way
+- Ind slider no longer shows 0.N/y when at max factories
+- Eco slider shows Clean/+N Pop past T-Form on a full planet
+- Alt + clicking cycles selection of overlapping fleets
+- The keys UHJK scroll the galaxy movement screen map
+- Map scrolling by mouse (ui.sm_mouse_scroll , -uismmousescroll)
+- Planets can be searched for by pressing the / key
+- Planets can be tagged with Ctrl-1-9 and recalled with 1-9
+- -nobombanimation disables bomb animation in space combat
+- The = key can be substitued by the # key (useful for some non-US keyboards)
+
+- Custom Game screen allows Local multiplayer
+- Custom Game screen allows setting opponent race/banner/names
+- Custom Game option of the Main Menu allows to change some game rules
+	- No elections
+	- No random events
+	- Faster/Slower research rate
+	- Precap tohit (from fixbugs ruleset)
+		MOO1 adds To Hit bonuses after capping defense. This
+		results in high defense being less effective against
+		high tech missiles.
+	- No tohit accumulation (from fixbugs ruleset)
+		MOO1 accumulates weapon To Hit bonuses while firing
+		the four weapons slots. This results in Hyper-X or 
+		better missiles or Megabolt Cannon in slots 1..3
+		affecting the accuracy of a beam weapon in slot 4.
+- Precap tohit and No tohit accumulation is now enabled by
+  default in new games
+
+- Design screen: Holding Ctrl changes the number of weapons by 10
+- Fleet screen: Clicking on Station or ship names sorts the list
+- Fleet screen: Specs hotkey changed 'v' -> 's'
+- Fleet screen: Scrap hotkey changed 's' -> 'r'
+- Fleet screen: Holding shift keeps selection if possible
+- Races screen: Clicking the portraits brings Report page
+- Report screen: Shows name of AI leaders
+- Tech screen:
+	- Pressing = or # adjusts only the unlocked sliders
+	- Tab runs through tech fields
+	- 1-6 selects tech tab
+	- +,- adjusts related slider
+	- L locks related slider
+	- Holding Ctrl changes slider by 10
+	- Holding Alt changes slider to maximum
+- Planets screen: Nebula planets show "NEB" in their shields field
+- Planets screen: Clicking on #, Name, etc sorts the list
+- Planets screen: Max population column
+- Planets screen: Clicking on the production field opens the reserve
+  transfer dialog or cancels the transfer.
+- Planets screen: Clicking on the dock field changes design selection
+- Planets screen: Ctrl+LMB on ship design name to build it everywhere
+- Planets screen: Alt+LMB replaces the ship design with the ship design 
+  of the current planet everywhere
+
+- Starmap: Clicking a selected destination star again works as Accept
+- Starmap: Prssing = or # transfers reserve for one round of production
+- Starmap: Removed '?' cursor area
+- Starmap: Keep planet focus after running through the Next turn phase
+- Starmap: Eco slider shows fractional population growth if less than 10
+- Starmap: Nebula planets have a purple frame around their picture
+- Starmap: Races hotkey changed 'r' -> 'e'
+- Starmap: Reloc hotkey changed 'l' -> 'r'
+- Starmap: Send transport: Holding Ctrl changes the number of transports by 10%
+- Starmap: Send transport: Pressing A sets the slider to maximum
+- Starmap: Ctrl+R sets reloc point for all planets
+- Starmap: Alt+F shows incoming friendly fleet routes
+- Starmap: Alt+O shows populations for explored planets in scanner range
+- Starmap: Added 'production' button for reserve transfer
+- Starmap: Added 'bases' button for basescrap UI
+- Starmap: Fleet deployment: Holding Ctrl changes the number of ships by 1
+- Starmap: Allowed centering on any planet
+- Starmap: F2, F3, F8, F9 behavior is now the same as tag/search
+  if planet focus is visible
+- Starmap: F4, F5 now iterates over transports or fleets enroute
+- Starmap: Planet: Pressing Alt + clicking on the left/right slider arrow
+  sets slider to min/max
+
+The config file item "ui.uiextra" (set via the -uiextra command-line option)
+enables the following extra UI features:
+- Continue, Undo and Init saves can be chosen in the Load Game screen
+- Game options screen Silent/FX Only/Music is replaced with more options
+- Map screen shows current year
+- Fleet deployment shows the amount of available ships
+- Hovering over a planet draws a ruler with the distance in parsec from the
+  currently selected planet if is in the screen.
+- When espionage was successful, clicking on the race icon opens the spy report
+
+The config file item "ui.uigovernor" enables the following UI features:
+- Governor screen can be opened by clicking on the Pop text or pressing V key.
+  The screen include Eco mode, buildup mode and whether to build stargates.
+  All local settings are also reachable directly over the planet interface.
+- Clicking on the planetary production field when the governor is active cycles
+  through the reserve spending modes for the planet. The modes are "none"
+  (never), "buildup" (only during buildup) and "always" (useful for Ultra Rich
+  or Artifacts planets).
+- When a planet is governed, clicking on or mouse wheeling over the bases field
+  allow to increase or adjust the target bases amount.
+- The plantary production field indicates whether the planet currently receives
+  reserve spending (yellow = none, red = partial, while = full). The same
+  colors are also used in the Planets screen.
+- Tech screen has lights showing when you reach max research bonus
+- Clicking on the Tech screen lights sets the slider to bonus limit
+- Tech bonus amount is shown in the slider background
+- Tech screen has additional buttons to equalize spending (= or #), set to
+  minimum for bonus (m) and for optimum allocation (o). The latter can be
+  automated by clicking the level/auto button (t) in the upper right corner.
+- Pressing I opens message filter options
+- Completing terraforming generates a message (which is filtered by default)
+
+See doc/list_gamediff.txt for a list of differences in the game itself.

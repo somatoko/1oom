@@ -1,0 +1,139 @@
+This is an incomplete list of PBX number replacements.
+Run with -dumpnum for the full list without explanations.
+
+(name : range, default)
+
+deterministic : 0..1, 1
+  - Game is deterministic.
+    The game is deterministic by default. Given the same input, the outcome
+    remains the same. Reloading a save and clicking Next turn will not get rid
+    of a nasty event. Setting this number to 0 makes sitting idle churn the
+    random number generator for producing different results.
+
+bt_turn_max : 1..65535, 50
+  - The number of battle turns before a forced retreat.
+
+aud_ask_break_nap : 0..1, 0
+  - Include Non-Aggression Pact in Break Alliance With Another Race.
+    The OSG claims that the audience dialog option is enabled if a NAP exists
+    between any of the opponents. This is a filthy lie.
+
+aud_bounty_give : 0..1, 0
+  - Give promised bounty.
+    The AI sometimes promises to give rewards for attacking an another player.
+    In MOO1 the AI says something along the lines of "thnx, take this FOO tech"
+    but never actually gives anything.
+
+monster_rest_att : 0..1, 0
+  - Allow attacking resting space monsters.
+    In MOO1 it is impossible to attack a space crystal or amoeba after the
+    turn it has reached a planet.
+
+orbital_weap_any : 0..1, 0
+  - Allow orbital bombardment with any weapon type.
+    In MOO1 neither Death Ray, Crystal Ray nor Amoeba Stream can be used for
+    orbital bombardment. The last two are only available via save game editing,
+    but the omission of Death Ray is puzzling.
+
+orbital_weap_4 : 0..1, 0
+  - Allow orbital bombardment with weapon in slot 4.
+    In MOO1 the weapon in slot 4 is not used in orbital bombardment.
+
+orbital_torpedo : 0..1, 0
+  - Fix orbital bombardment missile/torpedo damage halving.
+    In MOO1 the missile damage is halved but torpedo damage is untouched.
+
+orbital_comp_fix : 0..1, 0
+  - Fix orbital bombardment undeserved battle computer bonus.
+    In MOO1 the bonus is given for the best battle computer in any ship design
+    regardless of if any such ships are present in the fleet in orbit.
+
+combat_trans_fix : 0..1, 0
+  - Make Combat Transporters work as intended.
+    In MOO1 Combat Transporters only work if the planet owner has Sub-Space
+    Interdictor, and using 25% roll followed by 50% roll if the first one
+    failed. Enabling the fix makes it behave as OSG describes; chance is 50%/25%
+    depending on Interdictor.
+
+retreat_redir_fix : 0..1, 0
+  - Fix retreating fleet redirection back to battle bug/cheat.
+    In MOO1 fleets retreating from battle can be redirected to fight again the
+    next turn. This fix disables redirecting back to the planet the fleet just
+    retreated from unless Hyperspace Communications is available.
+
+first_tech_rp_fix : 0..1, 0
+  - Fix RP stagnation before starting first tech project.
+    Investing 1 RP to start the first project in a field is not enough due to
+    the 10% stagnation rounding it down to 0.
+
+waste_adjust_fix : 0..1, 0
+  - Fix waste elimination slider autoadjustment.
+    In MOO1 the sum of sliders can exceed 100 due to weird math in the waste
+    elimination slider adjustment code.
+
+eco_slider_slack : 0..255, 7
+  - Eco slider automatic adjustment slack.
+    Reducing the value to 0 eliminates extraneous eco spending after population
+    maximum has been reached.
+
+reset_tform_to_max : 0..1, 1
+  - Reset terraforming to the player's maximum when finishing soil enrichment.
+    If this value is 1 (the default), when the soil enrichment project is
+    completed on a planet that has been terraformed to a higher level than
+    the player has available, the terraforming is reset to the players
+    maximum. If the value is 0, the alien terraforming is kept.
+
+soil_rounding_fix : 0..1, 0
+  - Fix incorrect rounding up with soil enrichment
+    In older versions of 1oom and probably in MOO1 instead of rounding up to
+    the next multiple of 5, the game adds an additional +5 unless the base size
+    is in the range 50-59 or 100-109.
+
+hidden_child_labor : 0..1, 1
+  - Update production for SHIP, DEF and IND spending after ECO spending and
+    pop growth. TECH spending is not affected and uses pre-growth values.
+    Default is 1. A value of 0 means the same production for all sliders.
+
+tech_costmuld : 0..255, ?
+  - Research discovery base cost difficulty multiplier for human players.
+
+tech_costmula : 0..255, ?
+  - Research discovery base cost difficulty multiplier for AI players.
+
+tcostm_* : 0..255, ?
+  - Research discovery base cost racial modifier.
+
+event_roll : 0..2147483647, 512
+  - Special event probability. Bigger number means events are less likely.
+    Zero means events are disabled.
+
+council_years : 0..32767, 25
+  - Number of years between Galactic Council meetings.
+    Zero means the Council never gathers.
+
+trait1_* : 0..5, ?
+  - Starting personality type table for each race.
+    The type is chosen randomly from the table when stating a new game.
+    The values are: 0 = Xenophobix, 1 = Ruthless, 2 = Aggressive,
+    3 = Erratic, 4 = Honorable, 5 = Pacifistic.
+
+trait2_* : 0..5, ?
+  - Starting racial objective table for each race.
+    The objective is chosen randomly from the table when stating a new game.
+    The values are: 0 = Diplomat, 1 = Militarist, 2 = Expansionist,
+    3 = Technologist, 4 = Industrialist, 5 = Ecologist.
+
+crystal_* : ?, ?
+amoeba_* : ?, ?
+guardian_* : ?, ?
+  - The index of these space monster tables is the difficulty level.
+
+ngt_*_* : 0..255, ?
+  - New game research list limitations for each field and race.
+    Table index corresponds to tech level, for example ngt_we_meklar item 32
+    controls Gauss Autocannon research availability for Meklars.
+    The value 1 means the tech is never added, f.ex Silicoids & colony tech.
+    The value 2 means the tech is always added. (Unused by default.)
+    The bits 2..7 (values 4, 8, ...) are used for groups of essential techs;
+    the research list must contain at least one of the techs with a given
+    bit set. (Bit 2 / value 4 is the only one used by default.)
